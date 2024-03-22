@@ -1,11 +1,18 @@
+from restrictions import (
+    validate_emotional_entity_length,
+    validate_emotions,
+    validate_pad_values,
+)
+
+
 def update_emotions(
     emotional_entity,
-    happiness_amount,
-    sadness_amount,
-    fear_amount,
-    anger_amount,
-    disgust_amount,
-    surprise_amount,
+    happiness_amount=0,
+    sadness_amount=0,
+    fear_amount=0,
+    anger_amount=0,
+    disgust_amount=0,
+    surprise_amount=0,
 ):
     """
     Increases or decrease the emotions in the emotional entity.
@@ -21,8 +28,11 @@ def update_emotions(
 
     Returns:
         list: The updated emotional entity.
-        str: An error response if the total emotion sum exceeds 100.
+        str: An error message.
     """
+    errorLength = validate_emotional_entity_length(emotional_entity)
+    if errorLength:
+        return errorLength
 
     if len(emotional_entity) == 6 or len(emotional_entity) == 9:
         emotional_entity[0] += happiness_amount
@@ -32,16 +42,9 @@ def update_emotions(
         emotional_entity[4] += disgust_amount
         emotional_entity[5] += surprise_amount
 
-        for i in emotional_entity[:6]:
-            if i < 0:
-                return "The emotional entity update cannot have negative emotions"
-
-        total_emotions_sum = sum(emotional_entity[:6])
-        if total_emotions_sum > 100:
-            return "The total sum of emotions cannot exceed 100"
-
-    else:
-        return "The list of emotions must have 6 positions for the Paul Ekman model or 9 positions for the PAD model"
+        error = validate_emotions(emotional_entity[:6])
+        if error:
+            return error
 
     return emotional_entity
 
@@ -60,18 +63,15 @@ def update_pad_values(
 
     Returns:
         list: The updated emotional entity.
-        str: An error response if a PAD value is less than 0 or greater than 100.
+        str: An error message.
     """
-
     if len(emotional_entity) == 9:
         emotional_entity[6] += pleasure_amount
         emotional_entity[7] += activation_amount
         emotional_entity[8] += dominance_amount
 
-        for i in range(6, 9):
-            if emotional_entity[i] < 0:
-                return "PAD values cannot be less than 0"
-            elif emotional_entity[i] > 100:
-                return "PAD values cannot be greater than 100"
+        error = validate_pad_values(emotional_entity[6:])
+        if error:
+            return error
 
     return emotional_entity

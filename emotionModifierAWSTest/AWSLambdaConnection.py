@@ -8,11 +8,7 @@ def call_lambda_function(url_api_gateway, event):
 
         if response.status_code == 200:
             lambda_response = json.loads(response.text)
-
-            if lambda_response["statusCode"] == 400:
-                return lambda_response["body"]
-            elif lambda_response["statusCode"] == 200:
-                return lambda_response["body"]
+            return lambda_response.get("body")
         else:
             return "Error calling Lambda function. Status code: " + str(
                 response.status_code

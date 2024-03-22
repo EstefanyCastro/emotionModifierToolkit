@@ -94,10 +94,7 @@ class TestUpdateHappiness(unittest.TestCase):
 
         self.assertIsNotNone(result)
         self.assertIsInstance(result, str)
-        self.assertEqual(
-            result,
-            "The amount of emotions and the amount of PAD values must be integers",
-        )
+        self.assertEqual(result, "All amounts must be integers")
 
     def test_error_negative_array(self):
         emotional_entity = [-10, 10, 30, 5, 0, 6]
@@ -122,6 +119,16 @@ class TestUpdateHappiness(unittest.TestCase):
         self.assertEqual(
             result, "The list of emotions must contain only positive integers or zero"
         )
+
+    def test_error_excessive_negative_amount(self):
+        emotional_entity = [10, 10, 30, 5, 0, 6]
+        happiness_amount = -15
+
+        result = updateHappiness(emotional_entity, happiness_amount)
+
+        self.assertIsNotNone(result)
+        self.assertIsInstance(result, str)
+        self.assertEqual(result, "Emotions cannot be negative")
 
     def test_null(self):
         emotional_entity = [0, 0, 0, 0, 0, 0]
@@ -205,7 +212,7 @@ class TestUpdateHappiness(unittest.TestCase):
 
         self.assertIsNotNone(result)
         self.assertIsInstance(result, str)
-        self.assertEqual(result, "PAD values cannot be greater than 100")
+        self.assertEqual(result, "PAD values cannot be less than 0 or greater than 100")
 
     def test_excessive_array_error_PAD(self):
         emotional_entity = [10, 100, 10, 50, 87, 12, 50, 60, 10]
@@ -285,10 +292,7 @@ class TestUpdateHappiness(unittest.TestCase):
 
         self.assertIsNotNone(result)
         self.assertIsInstance(result, str)
-        self.assertEqual(
-            result,
-            "The amount of emotions and the amount of PAD values must be integers",
-        )
+        self.assertEqual(result, "All amounts must be integers")
 
     def test_non_integer_amount_error_PAD(self):
         emotional_entity = [10, 10, 10, 5, 5, 12, 20, 60, 10]
@@ -307,10 +311,7 @@ class TestUpdateHappiness(unittest.TestCase):
 
         self.assertIsNotNone(result)
         self.assertIsInstance(result, str)
-        self.assertEqual(
-            result,
-            "The amount of emotions and the amount of PAD values must be integers",
-        )
+        self.assertEqual(result, "All amounts must be integers")
 
     def test_negative_array_error_PAD(self):
         emotional_entity = [-10, 10, 10, 5, 5, 12, 20, -60, 10]
@@ -350,9 +351,7 @@ class TestUpdateHappiness(unittest.TestCase):
 
         self.assertIsNotNone(result)
         self.assertIsInstance(result, str)
-        self.assertEqual(
-            result, "The emotional entity update cannot have negative emotions"
-        )
+        self.assertEqual(result, "Emotions cannot be negative")
 
     def test_negative_amount_error_PAD(self):
         emotional_entity = [10, 10, 10, 5, 5, 12, 20, 60, 10]
@@ -371,7 +370,7 @@ class TestUpdateHappiness(unittest.TestCase):
 
         self.assertIsNotNone(result)
         self.assertIsInstance(result, str)
-        self.assertEqual(result, "PAD values cannot be less than 0")
+        self.assertEqual(result, "PAD values cannot be less than 0 or greater than 100")
 
     def test_null_PAD(self):
         emotional_entity = [0, 0, 0, 0, 0, 0, 0, 0, 0]
