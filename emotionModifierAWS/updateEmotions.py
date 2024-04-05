@@ -7,12 +7,12 @@ from restrictions import (
 
 def update_emotions(
     emotional_entity,
-    happiness_amount=0,
-    sadness_amount=0,
-    fear_amount=0,
-    anger_amount=0,
-    disgust_amount=0,
-    surprise_amount=0,
+    happiness_amount,
+    sadness_amount,
+    fear_amount,
+    anger_amount,
+    disgust_amount,
+    surprise_amount,
 ):
     """
     Increases or decrease the emotions in the emotional entity.
@@ -30,9 +30,9 @@ def update_emotions(
         list: The updated emotional entity.
         str: An error message.
     """
-    errorLength = validate_emotional_entity_length(emotional_entity)
-    if errorLength:
-        return errorLength
+    error_length = validate_emotional_entity_length(emotional_entity)
+    if error_length:
+        return error_length
 
     if len(emotional_entity) == 6 or len(emotional_entity) == 9:
         emotional_entity[0] += happiness_amount

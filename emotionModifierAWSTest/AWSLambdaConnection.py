@@ -18,16 +18,34 @@ def call_lambda_function(url_api_gateway, event):
         return "Connection error: " + str(e)
 
 
-def updateHappiness(
+# def update_happiness(
+#     emotional_entity,
+#     happiness_amount,
+#     pleasure_amount=0,
+#     activation_amount=0,
+#     dominance_amount=0,
+# ):
+#     url_api_gateway = "https://sgzan1udv6.execute-api.us-east-2.amazonaws.com/emotionModifier/emotionModifierAPI"
+#     event = {
+#         "function_to_call": "updateHappiness",
+#         "emotional_entity": emotional_entity,
+#         "happiness_amount": happiness_amount,
+#         "pleasure_amount": pleasure_amount,
+#         "activation_amount": activation_amount,
+#         "dominance_amount": dominance_amount,
+#     }
+#     return call_lambda_function(url_api_gateway, event)
+
+
+def update_happiness(
     emotional_entity,
     happiness_amount,
     pleasure_amount=0,
     activation_amount=0,
     dominance_amount=0,
 ):
-    url_api_gateway = "https://sgzan1udv6.execute-api.us-east-2.amazonaws.com/emotionModifier/emotionModifierAPI"
+    url_api_gateway = "https://sgzan1udv6.execute-api.us-east-2.amazonaws.com/emotionModifier/updateHappiness"
     event = {
-        "function_to_call": "updateHappiness",
         "emotional_entity": emotional_entity,
         "happiness_amount": happiness_amount,
         "pleasure_amount": pleasure_amount,

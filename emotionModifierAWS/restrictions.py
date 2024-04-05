@@ -16,10 +16,33 @@ def validate_emotional_entity_length(emotional_entity):
     return None
 
 
-def validate_amounts(amounts):
+def validate_amounts(
+    pleasure_amount,
+    activation_amount,
+    dominance_amount,
+    happiness_amount,
+    sadness_amount,
+    fear_amount,
+    anger_amount,
+    disgust_amount,
+    surprise_amount,
+):
     # Validates all amounts, ensuring they are integers.
 
-    if not all(isinstance(value, int) for value in amounts.values()):
+    if not all(
+        isinstance(value, int)
+        for value in [
+            pleasure_amount,
+            activation_amount,
+            dominance_amount,
+            happiness_amount,
+            sadness_amount,
+            fear_amount,
+            anger_amount,
+            disgust_amount,
+            surprise_amount,
+        ]
+    ):
         return "All amounts must be integers"
     return None
 
@@ -37,7 +60,7 @@ def validate_emotions(emotions):
 
 
 def validate_pad_values(pad_values):
-    #  Validates PAD values.
+    # Validates PAD values.
 
     for i in pad_values:
         if i < 0 or i > 100:

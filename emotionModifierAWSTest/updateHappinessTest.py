@@ -1,5 +1,5 @@
 import unittest
-from AWSLambdaConnection import updateHappiness
+from AWSLambdaConnection import update_happiness
 
 
 class TestUpdateHappiness(unittest.TestCase):
@@ -10,7 +10,7 @@ class TestUpdateHappiness(unittest.TestCase):
         happiness_amount = 30
 
         # Call updateHappiness function
-        result = updateHappiness(emotional_entity, happiness_amount)
+        result = update_happiness(emotional_entity, happiness_amount)
 
         # Check that the result is not None
         self.assertIsNotNone(result)
@@ -25,7 +25,7 @@ class TestUpdateHappiness(unittest.TestCase):
         emotional_entity = [50, 0, 0, 0, 0, 0]
         happiness_amount = -10
 
-        result = updateHappiness(emotional_entity, happiness_amount)
+        result = update_happiness(emotional_entity, happiness_amount)
 
         self.assertIsNotNone(result)
         self.assertIsInstance(result, list)
@@ -36,7 +36,7 @@ class TestUpdateHappiness(unittest.TestCase):
         emotional_entity = [10, 10, 30, 40, 5, 5]
         happiness_amount = 100
 
-        result = updateHappiness(emotional_entity, happiness_amount)
+        result = update_happiness(emotional_entity, happiness_amount)
 
         self.assertIsNotNone(result)
         self.assertIsInstance(result, str)
@@ -46,17 +46,17 @@ class TestUpdateHappiness(unittest.TestCase):
         emotional_entity = [200, 10, 30, 40, 5, 5]
         happiness_amount = 10
 
-        result = updateHappiness(emotional_entity, happiness_amount)
+        result = update_happiness(emotional_entity, happiness_amount)
 
         self.assertIsNotNone(result)
         self.assertIsInstance(result, str)
         self.assertEqual(result, "The total sum of emotions cannot exceed 100")
 
-    def test_error_excessive_array(self):
+    def test_error_excessive_array_2(self):
         emotional_entity = [10, 10, 30, 400, 5, 5]
         happiness_amount = 10
 
-        result = updateHappiness(emotional_entity, happiness_amount)
+        result = update_happiness(emotional_entity, happiness_amount)
 
         self.assertIsNotNone(result)
         self.assertIsInstance(result, str)
@@ -66,7 +66,7 @@ class TestUpdateHappiness(unittest.TestCase):
         emotional_entity = ["a", 10, 30, 40, 5, 5]
         happiness_amount = 10
 
-        result = updateHappiness(emotional_entity, happiness_amount)
+        result = update_happiness(emotional_entity, happiness_amount)
 
         self.assertIsNotNone(result)
         self.assertIsInstance(result, str)
@@ -74,11 +74,11 @@ class TestUpdateHappiness(unittest.TestCase):
             result, "The list of emotions must contain only positive integers or zero"
         )
 
-    def test_error_non_integer_array(self):
+    def test_error_non_integer_array_2(self):
         emotional_entity = [[0, 2], 10, 30, 40, 5, 5]
         happiness_amount = 10
 
-        result = updateHappiness(emotional_entity, happiness_amount)
+        result = update_happiness(emotional_entity, happiness_amount)
 
         self.assertIsNotNone(result)
         self.assertIsInstance(result, str)
@@ -90,7 +90,7 @@ class TestUpdateHappiness(unittest.TestCase):
         emotional_entity = [50, 10, 0, 0, 0, 0]
         happiness_amount = "a"
 
-        result = updateHappiness(emotional_entity, happiness_amount)
+        result = update_happiness(emotional_entity, happiness_amount)
 
         self.assertIsNotNone(result)
         self.assertIsInstance(result, str)
@@ -100,7 +100,7 @@ class TestUpdateHappiness(unittest.TestCase):
         emotional_entity = [-10, 10, 30, 5, 0, 6]
         happiness_amount = 10
 
-        result = updateHappiness(emotional_entity, happiness_amount)
+        result = update_happiness(emotional_entity, happiness_amount)
 
         self.assertIsNotNone(result)
         self.assertIsInstance(result, str)
@@ -108,11 +108,11 @@ class TestUpdateHappiness(unittest.TestCase):
             result, "The list of emotions must contain only positive integers or zero"
         )
 
-    def test_error_negative_array(self):
+    def test_error_negative_array_2(self):
         emotional_entity = [10, 10, 30, -5, 0, 6]
         happiness_amount = 10
 
-        result = updateHappiness(emotional_entity, happiness_amount)
+        result = update_happiness(emotional_entity, happiness_amount)
 
         self.assertIsNotNone(result)
         self.assertIsInstance(result, str)
@@ -124,7 +124,7 @@ class TestUpdateHappiness(unittest.TestCase):
         emotional_entity = [10, 10, 30, 5, 0, 6]
         happiness_amount = -15
 
-        result = updateHappiness(emotional_entity, happiness_amount)
+        result = update_happiness(emotional_entity, happiness_amount)
 
         self.assertIsNotNone(result)
         self.assertIsInstance(result, str)
@@ -134,18 +134,18 @@ class TestUpdateHappiness(unittest.TestCase):
         emotional_entity = [0, 0, 0, 0, 0, 0]
         happiness_amount = 0
 
-        result = updateHappiness(emotional_entity, happiness_amount)
+        result = update_happiness(emotional_entity, happiness_amount)
 
         self.assertIsNotNone(result)
         self.assertIsInstance(result, list)
         self.assertEqual(len(result), 6)
         self.assertEqual(result, [0, 0, 0, 0, 0, 0])
 
-    def test_error_happiness_amount_positions(self):
+    def test_error_array_positions(self):
         emotional_entity = [0, 0, 0, 0]
         happiness_amount = 0
 
-        result = updateHappiness(emotional_entity, happiness_amount)
+        result = update_happiness(emotional_entity, happiness_amount)
 
         self.assertIsNotNone(result)
         self.assertIsInstance(result, str)
@@ -163,7 +163,7 @@ class TestUpdateHappiness(unittest.TestCase):
         activation_amount = 30
         dominance_amount = 82
 
-        result = updateHappiness(
+        result = update_happiness(
             emotional_entity,
             happiness_amount,
             pleasure_amount,
@@ -183,7 +183,7 @@ class TestUpdateHappiness(unittest.TestCase):
         activation_amount = 30
         dominance_amount = 82
 
-        result = updateHappiness(
+        result = update_happiness(
             emotional_entity,
             happiness_amount,
             pleasure_amount,
@@ -195,14 +195,14 @@ class TestUpdateHappiness(unittest.TestCase):
         self.assertIsInstance(result, str)
         self.assertEqual(result, "The total sum of emotions cannot exceed 100")
 
-    def test_excessive_amount_error_PAD(self):
+    def test_excessive_amount_error_PAD_2(self):
         emotional_entity = [10, 10, 10, 5, 5, 12, 50, 60, 10]
         happiness_amount = 30
         pleasure_amount = 500
         activation_amount = 30
         dominance_amount = 82
 
-        result = updateHappiness(
+        result = update_happiness(
             emotional_entity,
             happiness_amount,
             pleasure_amount,
@@ -221,7 +221,7 @@ class TestUpdateHappiness(unittest.TestCase):
         activation_amount = 30
         dominance_amount = 82
 
-        result = updateHappiness(
+        result = update_happiness(
             emotional_entity,
             happiness_amount,
             pleasure_amount,
@@ -240,7 +240,7 @@ class TestUpdateHappiness(unittest.TestCase):
         activation_amount = 30
         dominance_amount = 82
 
-        result = updateHappiness(
+        result = update_happiness(
             emotional_entity,
             happiness_amount,
             pleasure_amount,
@@ -254,14 +254,14 @@ class TestUpdateHappiness(unittest.TestCase):
             result, "The list of emotions must contain only positive integers or zero"
         )
 
-    def test_non_integer_array_error_PAD(self):
+    def test_non_integer_array_error_PAD_2(self):
         emotional_entity = [10, 10, 10, 5, 5, 12, "G", 60, 10]
         happiness_amount = 30
         pleasure_amount = 5
         activation_amount = 30
         dominance_amount = 82
 
-        result = updateHappiness(
+        result = update_happiness(
             emotional_entity,
             happiness_amount,
             pleasure_amount,
@@ -282,7 +282,7 @@ class TestUpdateHappiness(unittest.TestCase):
         activation_amount = 30
         dominance_amount = 82
 
-        result = updateHappiness(
+        result = update_happiness(
             emotional_entity,
             happiness_amount,
             pleasure_amount,
@@ -294,14 +294,14 @@ class TestUpdateHappiness(unittest.TestCase):
         self.assertIsInstance(result, str)
         self.assertEqual(result, "All amounts must be integers")
 
-    def test_non_integer_amount_error_PAD(self):
+    def test_non_integer_amount_error_PAD_2(self):
         emotional_entity = [10, 10, 10, 5, 5, 12, 20, 60, 10]
         happiness_amount = 8
         pleasure_amount = 5
         activation_amount = [30, "a"]
         dominance_amount = 82
 
-        result = updateHappiness(
+        result = update_happiness(
             emotional_entity,
             happiness_amount,
             pleasure_amount,
@@ -320,7 +320,7 @@ class TestUpdateHappiness(unittest.TestCase):
         activation_amount = 30
         dominance_amount = 82
 
-        result = updateHappiness(
+        result = update_happiness(
             emotional_entity,
             happiness_amount,
             pleasure_amount,
@@ -341,7 +341,7 @@ class TestUpdateHappiness(unittest.TestCase):
         activation_amount = 30
         dominance_amount = 82
 
-        result = updateHappiness(
+        result = update_happiness(
             emotional_entity,
             happiness_amount,
             pleasure_amount,
@@ -353,14 +353,14 @@ class TestUpdateHappiness(unittest.TestCase):
         self.assertIsInstance(result, str)
         self.assertEqual(result, "Emotions cannot be negative")
 
-    def test_negative_amount_error_PAD(self):
+    def test_negative_amount_error_PAD_2(self):
         emotional_entity = [10, 10, 10, 5, 5, 12, 20, 60, 10]
         happiness_amount = 2
         pleasure_amount = 5
         activation_amount = 30
         dominance_amount = -82
 
-        result = updateHappiness(
+        result = update_happiness(
             emotional_entity,
             happiness_amount,
             pleasure_amount,
@@ -379,7 +379,7 @@ class TestUpdateHappiness(unittest.TestCase):
         activation_amount = 0
         dominance_amount = 0
 
-        result = updateHappiness(
+        result = update_happiness(
             emotional_entity,
             happiness_amount,
             pleasure_amount,
@@ -392,14 +392,14 @@ class TestUpdateHappiness(unittest.TestCase):
         self.assertEqual(len(result), 9)
         self.assertEqual(result, [0, 0, 0, 0, 0, 0, 0, 0, 0])
 
-    def test_amount_positions_error_PAD(self):
+    def test_array_positions_error_PAD(self):
         emotional_entity = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         happiness_amount = 0
         pleasure_amount = 0
         activation_amount = 0
         dominance_amount = 0
 
-        result = updateHappiness(
+        result = update_happiness(
             emotional_entity,
             happiness_amount,
             pleasure_amount,
