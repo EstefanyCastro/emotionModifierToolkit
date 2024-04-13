@@ -17,11 +17,7 @@ def validate_emotional_entity_length(emotional_entity):
 
 
 def validate_amounts(
-    pleasure_amount,
-    activation_amount,
-    dominance_amount,
-    happiness_amount,
-    surprise_amount,
+    pleasure_amount, activation_amount, dominance_amount, sadness_amount, anger_amount
 ):
     # Validates all amounts, ensuring they are integers.
 
@@ -31,8 +27,8 @@ def validate_amounts(
             pleasure_amount,
             activation_amount,
             dominance_amount,
-            happiness_amount,
-            surprise_amount,
+            sadness_amount,
+            anger_amount,
         ]
     ):
         return "All amounts must be integers"
@@ -45,45 +41,55 @@ def validate_emotions(emotions):
     for i in emotions:
         if i < 0:
             return "Emotions cannot be negative"
-    total_emotions_sum = sum(emotions)
-    if total_emotions_sum > 100:
-        return "The total sum of emotions cannot exceed 100"
     return None
+
+
+def normalize_emotions(emotions):
+    # If the sum of the emotions is greater than 100, we normalize the list of emotions.
+    total_emotions_sum = sum(emotions)
+
+    if total_emotions_sum > 100:
+        normalized_emotions = [
+            int(emotion * 100 / total_emotions_sum) for emotion in emotions
+        ]
+        return normalized_emotions
+    else:
+        return emotions
 
 
 def validate_pad_values(pad_values):
     # Validates PAD values.
 
     for i in pad_values:
-        if i < 0 or i > 100:
-            return "PAD values cannot be less than 0 or greater than 100"
+        if i < 0:
+            return "PAD values cannot be less than 0"
     return None
 
 
-def update_exciting_experience(emotional_entity, happiness_amount, surprise_amount):
+def normalize_pad_values(pad_values):
+    # Normalize the PAD values to ensure that they do not exceed the range of 100.
+
+    normalized_values = [min(value, 100) for value in pad_values]
+    return normalized_values
+
+
+def update_feel_envy(emotional_entity, sadness_amount, anger_amount):
     """
-    Mutate the emotions of happiness and surprise in the emotional entity.
-
-    Args:
-        emotional_entity (list): The list of emotional values.
-        happiness_amount (int): The amount of happiness mutation.
-        surprise_amount (int): The amount of surprise mutation.
-
-    Returns:
-        list: The updated emotional entity.
-        str: An error message.
+    Mutate the emotions of sadness and anger in the emotional entity.
     """
     error_length = validate_emotional_entity_length(emotional_entity)
     if error_length:
         return error_length
 
     if len(emotional_entity) == 6 or len(emotional_entity) == 9:
-        emotional_entity[0] += happiness_amount
-        emotional_entity[5] += surprise_amount
+        emotional_entity[1] += sadness_amount
+        emotional_entity[3] += anger_amount
 
         error = validate_emotions(emotional_entity[:6])
         if error:
             return error
+
+        emotional_entity[:6] = normalize_emotions(emotional_entity[:6])
 
     return emotional_entity
 
@@ -93,16 +99,6 @@ def update_pad_values(
 ):
     """
     Updates the PAD values in the emotional entity.
-
-    Args:
-        emotional_entity (list): The list of emotional values.
-        pleasure_amount (int): The amount of pleasure mutation.
-        activation_amount (int): The amount of activation mutation.
-        dominance_amount (int): The amount of dominance mutation.
-
-    Returns:
-        list: The updated emotional entity.
-        str: An error message.
     """
 
     if len(emotional_entity) == 9:
@@ -114,14 +110,37 @@ def update_pad_values(
         if error:
             return error
 
+        emotional_entity[6:] = normalize_pad_values(emotional_entity[6:])
+
     return emotional_entity
 
 
 def lambda_handler(event, context):
+    """
+    Lambda function to handle emotional entity updates.
+
+    Args:
+        event (json): The event containing emotional entity and mutation amounts.
+            - emotional_entity (list): The list of emotional values.
+            - sadness_amount (int): The amount of sadness mutation.
+            - anger_amount (int): The amount of anger mutation.
+            - pleasure_amount (int): The amount of pleasure mutation.
+            - activation_amount (int): The amount of activation mutation.
+            - dominance_amount (int): The amount of dominance mutation.
+        context: None
+
+    Returns:
+        json: A dictionary containing the HTTP status code and the updated emotional entity.
+            - statusCode (int): The HTTP status code.
+                - 200: Success.
+                - 400: Bad request.
+            - body (list or str): The updated emotional entity or an error message.
+    """
+
     # Gets the event parameters
     emotional_entity = event.get("emotional_entity", [])
-    happiness_amount = event.get("happiness_amount", 0)
-    surprise_amount = event.get("surprise_amount", 0)
+    sadness_amount = event.get("sadness_amount", 0)
+    anger_amount = event.get("anger_amount", 0)
     pleasure_amount = event.get("pleasure_amount", 0)
     activation_amount = event.get("activation_amount", 0)
     dominance_amount = event.get("dominance_amount", 0)
@@ -136,15 +155,15 @@ def lambda_handler(event, context):
         pleasure_amount,
         activation_amount,
         dominance_amount,
-        happiness_amount,
-        surprise_amount,
+        sadness_amount,
+        anger_amount,
     )
     if validation_error:
         return {"statusCode": 400, "body": validation_error}
 
     # Updates the emotional entity
-    updated_emotional_entity = update_exciting_experience(
-        emotional_entity, happiness_amount, surprise_amount
+    updated_emotional_entity = update_feel_envy(
+        emotional_entity, sadness_amount, anger_amount
     )
     if isinstance(updated_emotional_entity, str):
         return {"statusCode": 400, "body": updated_emotional_entity}
