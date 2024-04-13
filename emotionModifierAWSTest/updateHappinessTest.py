@@ -1,5 +1,5 @@
 import unittest
-from AWSLambdaConnection import update_happiness
+from .AWSLambdaConnection import update_happiness
 
 
 class TestUpdateHappiness(unittest.TestCase):
