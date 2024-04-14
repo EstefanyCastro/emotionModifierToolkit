@@ -39,41 +39,25 @@ def validate_amounts(
     return None
 
 
-def validate_emotions(emotions):
-    # Validates emotional values.
-
-    for i in emotions:
-        if i < 0:
-            return "Emotions cannot be negative"
-    return None
-
-
 def normalize_emotions(emotions):
-    # If the sum of the emotions is greater than 100, we normalize the list of emotions.
+    # Normalize emotions to ensure they are within the range [0, 100].
     total_emotions_sum = sum(emotions)
 
     if total_emotions_sum > 100:
         normalized_emotions = [
             int(emotion * 100 / total_emotions_sum) for emotion in emotions
         ]
-        return normalized_emotions
     else:
-        return emotions
+        normalized_emotions = emotions
 
-
-def validate_pad_values(pad_values):
-    # Validates PAD values.
-
-    for i in pad_values:
-        if i < 0:
-            return "PAD values cannot be less than 0"
-    return None
+    normalized_values = [max(0, value) for value in normalized_emotions]
+    return normalized_values
 
 
 def normalize_pad_values(pad_values):
-    # Normalize the PAD values to ensure that they do not exceed the range of 100.
+    # Normalize the PAD values to ensure they are within range [0, 100].
 
-    normalized_values = [min(value, 100) for value in pad_values]
+    normalized_values = [min(max(0, value), 100) for value in pad_values]
     return normalized_values
 
 
@@ -88,10 +72,6 @@ def update_feel_disappointment(emotional_entity, sadness_amount, surprise_amount
     if len(emotional_entity) == 6 or len(emotional_entity) == 9:
         emotional_entity[1] += sadness_amount
         emotional_entity[5] += surprise_amount
-
-        error = validate_emotions(emotional_entity[:6])
-        if error:
-            return error
 
         emotional_entity[:6] = normalize_emotions(emotional_entity[:6])
 
@@ -109,10 +89,6 @@ def update_pad_values(
         emotional_entity[6] += pleasure_amount
         emotional_entity[7] += activation_amount
         emotional_entity[8] += dominance_amount
-
-        error = validate_pad_values(emotional_entity[6:])
-        if error:
-            return error
 
         emotional_entity[6:] = normalize_pad_values(emotional_entity[6:])
 

@@ -112,16 +112,17 @@ class TestUpdateHappiness(unittest.TestCase):
         self.assertIsInstance(result, str)
         self.assertEqual(result, "All amounts must be integers")
 
-    # Test to verify error when happiness amount is excessively negative
-    def test_error_excessive_negative_happiness_amount(self):
+    # Test to verify normalization of excessively negative happiness amount
+    def test_normalize_excessive_negative_happiness_amount(self):
         emotional_entity = [10, 10, 30, 5, 0, 6]
         happiness_amount = -15
 
         result = update_happiness(emotional_entity, happiness_amount)
 
         self.assertIsNotNone(result)
-        self.assertIsInstance(result, str)
-        self.assertEqual(result, "Emotions cannot be negative")
+        self.assertIsInstance(result, list)
+        self.assertEqual(len(result), 6)
+        self.assertEqual(result, [0, 10, 30, 5, 0, 6])
 
     # Test to verify normalization of excessive emotional array
     def test_normalize_excessive_array(self):
@@ -344,8 +345,8 @@ class TestUpdateHappiness(unittest.TestCase):
         self.assertIsInstance(result, str)
         self.assertEqual(result, "All amounts must be integers")
 
-    # Test to verify error due to excessively negative happiness amount in PAD model
-    def test_error_excessive_negative_happiness_amount_PAD(self):
+    # Test to verify normalization of excessively negative happiness amount in PAD model
+    def test_normalize_excessive_negative_happiness_amount_PAD(self):
         emotional_entity = [10, 10, 10, 5, 5, 12, 20, 60, 10]
         happiness_amount = -60
         pleasure_amount = 5
@@ -361,8 +362,9 @@ class TestUpdateHappiness(unittest.TestCase):
         )
 
         self.assertIsNotNone(result)
-        self.assertIsInstance(result, str)
-        self.assertEqual(result, "Emotions cannot be negative")
+        self.assertIsInstance(result, list)
+        self.assertEqual(len(result), 9)
+        self.assertEqual(result, [0, 10, 10, 5, 5, 12, 25, 90, 92])
 
     # Test to verify normalization of excessive emotional array for PAD model
     def test_normalize_excessive_array_PAD(self):
@@ -406,8 +408,8 @@ class TestUpdateHappiness(unittest.TestCase):
         self.assertEqual(len(result), 9)
         self.assertEqual(result, [88, 2, 2, 1, 1, 3, 55, 90, 92])
 
-    # Test to verify error due to negative dominance amount in PAD model
-    def test_error_negative_dominance_amount_PAD(self):
+    # Test to verify normalization of negative dominance amount in PAD model
+    def test_normalize_negative_dominance_amount_PAD(self):
 
         emotional_entity = [10, 10, 10, 5, 5, 12, 20, 60, 10]
         happiness_amount = 2
@@ -424,11 +426,12 @@ class TestUpdateHappiness(unittest.TestCase):
         )
 
         self.assertIsNotNone(result)
-        self.assertIsInstance(result, str)
-        self.assertEqual(result, "PAD values cannot be less than 0")
+        self.assertIsInstance(result, list)
+        self.assertEqual(len(result), 9)
+        self.assertEqual(result, [12, 10, 10, 5, 5, 12, 25, 90, 0])
 
-    # Test to verify error due to excessively high pleasure amount in PAD model
-    def test_error_excessive_pleasure_amount_PAD(self):
+    # Test to verify normalization of excessively high pleasure amount in PAD model
+    def test_normalize_excessive_pleasure_amount_PAD(self):
         emotional_entity = [10, 10, 10, 5, 5, 12, 50, 60, 10]
         happiness_amount = 30
         pleasure_amount = 500
