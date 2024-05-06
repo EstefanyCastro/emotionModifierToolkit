@@ -22,5 +22,74 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run unit tests
+      - name: Run unit tests (beCriticizedTest)
+        run: python -m unittest emotionModifierAWSTest.beCriticizedTest
+
+      - name: Run unit tests (excitingExperienceTest)
+        run: python -m unittest emotionModifierAWSTest.excitingExperienceTest
+
+      - name: Run unit tests (experienceCrowdTest)
+        run: python -m unittest emotionModifierAWSTest.experienceCrowdTest
+
+      - name: Run unit tests (experienceInjusticeTest)
+        run: python -m unittest emotionModifierAWSTest.experienceInjusticeTest
+
+      - name: Run unit tests (experienceNaturalDisasterTest)
+        run: python -m unittest emotionModifierAWSTest.experienceNaturalDisasterTest
+
+      - name: Run unit tests (feelAlarmTest)
+        run: python -m unittest emotionModifierAWSTest.feelAlarmTest
+
+      - name: Run unit tests (feelDelightTest)
+        run: python -m unittest emotionModifierAWSTest.feelDelightTest
+
+      - name: Run unit tests (feelDespairTest)
+        run: python -m unittest emotionModifierAWSTest.feelDespairTest
+
+      - name: Run unit tests (feelDisappointmentTest)
+        run: python -m unittest emotionModifierAWSTest.feelDisappointmentTest
+
+      - name: Run unit tests (feelEnvyTest)
+        run: python -m unittest emotionModifierAWSTest.feelEnvyTest
+
+      - name: Run unit tests (feelGuiltyTest)
+        run: python -m unittest emotionModifierAWSTest.feelGuiltyTest
+
+      - name: Run unit tests (feelIndifferenceTest)
+        run: python -m unittest emotionModifierAWSTest.feelIndifferenceTest
+
+      - name: Run unit tests (feelIndignationTest)
+        run: python -m unittest emotionModifierAWSTest.feelIndignationTest
+
+      - name: Run unit tests (feelJealousTest)
+        run: python -m unittest emotionModifierAWSTest.feelJealousTest
+
+      - name: Run unit tests (feelProudTest)
+        run: python -m unittest emotionModifierAWSTest.feelProudTest
+
+      - name: Run unit tests (feelShameTest)
+        run: python -m unittest emotionModifierAWSTest.feelShameTest
+
+      - name: Run unit tests (updateAngerTest)
+        run: python -m unittest emotionModifierAWSTest.updateAngerTest
+
+      - name: Run unit tests (updateDisgustTest)
+        run: python -m unittest emotionModifierAWSTest.updateDisgustTest
+
+      - name: Run unit tests (updateFearTest)
+        run: python -m unittest emotionModifierAWSTest.updateFearTest
+
+      - name: Run unit tests (updateHappinessTest)
         run: python -m unittest emotionModifierAWSTest.updateHappinessTest
+
+      - name: Run unit tests (updateNegativeEmotionsTest)
+        run: python -m unittest emotionModifierAWSTest.updateNegativeEmotionsTest
+
+      - name: Run unit tests (updatePositiveEmotionsTest)
+        run: python -m unittest emotionModifierAWSTest.updatePositiveEmotionsTest
+
+      - name: Run unit tests (updateSadnessTest)
+        run: python -m unittest emotionModifierAWSTest.updateSadnessTest
+
+      - name: Run unit tests (updateSurpriseTest)
+        run: python -m unittest emotionModifierAWSTest.updateSurpriseTest
