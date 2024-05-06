@@ -57,7 +57,7 @@ def normalize_pad_values(pad_values):
     return normalized_values
 
 
-def update_feel_indiference(emotional_entity, anger_amount, disgust_amount):
+def update_feel_indifference(emotional_entity, anger_amount, disgust_amount):
     """
     Mutate the emotions of anger and disgust in the emotional entity.
     """
@@ -138,7 +138,7 @@ def lambda_handler(event, context):
         return {"statusCode": 400, "body": validation_error}
 
     # Updates the emotional entity
-    updated_emotional_entity = update_feel_indiference(
+    updated_emotional_entity = update_feel_indifference(
         emotional_entity, anger_amount, disgust_amount
     )
     if isinstance(updated_emotional_entity, str):
