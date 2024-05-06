@@ -1,3 +1,7 @@
 .scannerwork/
+.coverage
+.sonarlint
+.vscode
+
 __pycache__/
-normalization.py
+htmlcov/
