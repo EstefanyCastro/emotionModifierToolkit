@@ -34,4 +34,4 @@ The following application is a demonstration of the toolkit for the analysis and
 
 ### Swagger documentation:
 
-For detailed documentation on all endpoints, please refer to the Swagger Documentation at the following link https://github.com/EstefanyCastro/emotionModifierToolkitDocs
+For detailed documentation on all endpoints, please refer to the Swagger Documentation at the following link https://xwyfsg0gdj.execute-api.us-east-2.amazonaws.com/api-docs/. If you want to check the repository follow this link https://github.com/EstefanyCastro/emotionModifierToolkitDocs
